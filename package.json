@@ -1,7 +1,6 @@
 {
   "name": "@bitclaw/email",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -14,9 +13,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@sqlite-saas/result": "workspace:*",
-    "nodemailer": "^6.9.0",
-    "@react-email/render": "^1.0.0"
+    "@bitclaw/result": "^1.0.0",
+    "@react-email/render": "^1.0.0",
+    "nodemailer": "^6.9.0"
   },
   "peerDependencies": {
     "react": ">=18.0.0",

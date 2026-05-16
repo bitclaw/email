@@ -1,5 +1,5 @@
 /**
- * Re-export Result types from @sqlite-saas/result.
+ * Re-export Result types from @bitclaw/result.
  */
 export {
   type Err,
@@ -9,4 +9,4 @@ export {
   type Ok,
   ok,
   type Result
-} from '@sqlite-saas/result';
+} from '@bitclaw/result';
