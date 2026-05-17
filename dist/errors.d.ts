@@ -1,0 +1,9 @@
+export declare const EMAIL_ERROR_CODES: {
+    readonly PROVIDER_NOT_CONFIGURED: "EMAIL_PROVIDER_NOT_CONFIGURED";
+    readonly SEND_FAILED: "EMAIL_SEND_FAILED";
+    readonly RENDER_FAILED: "EMAIL_RENDER_FAILED";
+    readonly INVALID_CONFIG: "EMAIL_INVALID_CONFIG";
+    readonly AUTH_FAILED: "EMAIL_AUTH_FAILED";
+    readonly CONNECTION_FAILED: "EMAIL_CONNECTION_FAILED";
+};
+//# sourceMappingURL=errors.d.ts.map
