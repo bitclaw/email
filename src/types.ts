@@ -1,7 +1,7 @@
-import type { ReactElement } from "react";
-import type { Result } from "./result";
+import type { ReactElement } from 'react';
+import type { Result } from './result';
 
-export type EmailProviderType = "resend" | "smtp";
+export type EmailProviderType = 'resend' | 'smtp';
 
 export type SendEmailOptions = {
   to: string | string[];

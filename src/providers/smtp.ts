@@ -1,11 +1,10 @@
-import { EMAIL_ERROR_CODES } from "../errors";
-import type { Result } from "../result";
-import { err, ok } from "../result";
-import type { SendEmailOptions, SendEmailResult } from "../types";
-import { BaseEmailProvider } from "./base";
+import { EMAIL_ERROR_CODES } from '../errors';
+import type { Result } from '../result';
+import { err, ok } from '../result';
+import type { SendEmailOptions, SendEmailResult } from '../types';
+import { BaseEmailProvider } from './base';
 
 export class SmtpProvider extends BaseEmailProvider {
-  // biome-ignore lint/suspicious/noExplicitAny: nodemailer transporter, dynamically imported
   private transporter: any = null;
 
   private async getTransporter() {
@@ -16,12 +15,12 @@ export class SmtpProvider extends BaseEmailProvider {
       return null;
     }
 
-    const nodemailer = await import("nodemailer");
+    const nodemailer = await import('nodemailer');
     this.transporter = nodemailer.createTransport({
       host: smtp.host,
       port: smtp.port,
       secure: smtp.secure,
-      ...(smtp.auth ? { auth: smtp.auth } : {}),
+      ...(smtp.auth ? { auth: smtp.auth } : {})
     });
     return this.transporter;
   }
@@ -31,7 +30,7 @@ export class SmtpProvider extends BaseEmailProvider {
     if (!transporter) {
       return err(
         EMAIL_ERROR_CODES.PROVIDER_NOT_CONFIGURED,
-        "SMTP configuration is missing",
+        'SMTP configuration is missing'
       );
     }
 
@@ -44,52 +43,52 @@ export class SmtpProvider extends BaseEmailProvider {
     try {
       const info = await transporter.sendMail({
         from,
-        to: Array.isArray(options.to) ? options.to.join(", ") : options.to,
+        to: Array.isArray(options.to) ? options.to.join(', ') : options.to,
         subject: options.subject,
         html,
         text,
-        ...(options.replyTo ? { replyTo: options.replyTo } : {}),
+        ...(options.replyTo ? { replyTo: options.replyTo } : {})
       });
 
       return ok({
-        id: info.messageId || "unknown",
-        provider: this.getProviderName(),
+        id: info.messageId || 'unknown',
+        provider: this.getProviderName()
       });
     } catch (error: unknown) {
       const cause = error instanceof Error ? error : new Error(String(error));
       const code =
-        "code" in cause ? (cause as NodeJS.ErrnoException).code : undefined;
+        'code' in cause ? (cause as NodeJS.ErrnoException).code : undefined;
 
       // nodemailer v8 wraps ECONNREFUSED as ESOCKET
       const isConnectionRefused =
-        code === "ECONNREFUSED" ||
-        (code === "ESOCKET" && cause.message.includes("ECONNREFUSED"));
+        code === 'ECONNREFUSED' ||
+        (code === 'ESOCKET' && cause.message.includes('ECONNREFUSED'));
 
       if (isConnectionRefused) {
         return err(
           EMAIL_ERROR_CODES.CONNECTION_FAILED,
           `SMTP connection refused at ${this.config.smtp?.host}:${this.config.smtp?.port}`,
-          cause,
+          cause
         );
       }
 
-      if (code === "EAUTH" || code === "ESOCKET") {
+      if (code === 'EAUTH' || code === 'ESOCKET') {
         return err(
           EMAIL_ERROR_CODES.AUTH_FAILED,
           `SMTP authentication failed: ${cause.message}`,
-          cause,
+          cause
         );
       }
 
       return err(
         EMAIL_ERROR_CODES.SEND_FAILED,
         `Failed to send email via SMTP: ${cause.message}`,
-        cause,
+        cause
       );
     }
   }
 
   getProviderName(): string {
-    return "smtp";
+    return 'smtp';
   }
 }

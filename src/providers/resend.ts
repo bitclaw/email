@@ -1,11 +1,11 @@
-import { EMAIL_ERROR_CODES } from "../errors";
-import type { Result } from "../result";
-import { err, ok } from "../result";
-import type { SendEmailOptions, SendEmailResult } from "../types";
-import { BaseEmailProvider } from "./base";
+import { EMAIL_ERROR_CODES } from '../errors';
+import type { Result } from '../result';
+import { err, ok } from '../result';
+import type { SendEmailOptions, SendEmailResult } from '../types';
+import { BaseEmailProvider } from './base';
 
 export class ResendProvider extends BaseEmailProvider {
-  private client: import("resend").Resend | null = null;
+  private client: import('resend').Resend | null = null;
 
   private async getClient() {
     if (this.client) return this.client;
@@ -15,7 +15,7 @@ export class ResendProvider extends BaseEmailProvider {
       return null;
     }
 
-    const { Resend } = await import("resend");
+    const { Resend } = await import('resend');
     this.client = new Resend(apiKey);
     return this.client;
   }
@@ -25,7 +25,7 @@ export class ResendProvider extends BaseEmailProvider {
     if (!client) {
       return err(
         EMAIL_ERROR_CODES.PROVIDER_NOT_CONFIGURED,
-        "Resend API key is not configured",
+        'Resend API key is not configured'
       );
     }
 
@@ -42,30 +42,30 @@ export class ResendProvider extends BaseEmailProvider {
         subject: options.subject,
         html,
         text,
-        ...(options.replyTo ? { replyTo: options.replyTo } : {}),
+        ...(options.replyTo ? { replyTo: options.replyTo } : {})
       });
 
       if (result.error) {
         return err(
           EMAIL_ERROR_CODES.SEND_FAILED,
-          result.error.message || "Resend API error",
+          result.error.message || 'Resend API error'
         );
       }
 
       return ok({
-        id: result.data?.id || "unknown",
-        provider: this.getProviderName(),
+        id: result.data?.id || 'unknown',
+        provider: this.getProviderName()
       });
     } catch (error: unknown) {
       return err(
         EMAIL_ERROR_CODES.SEND_FAILED,
         `Failed to send email via Resend: ${error instanceof Error ? error.message : String(error)}`,
-        error instanceof Error ? error : undefined,
+        error instanceof Error ? error : undefined
       );
     }
   }
 
   getProviderName(): string {
-    return "resend";
+    return 'resend';
   }
 }
