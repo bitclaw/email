@@ -15,17 +15,14 @@ jobs:
         ports:
           - 1025:1025
           - 8025:8025
-        options: >-
-          --health-cmd "wget -q --spider http://localhost:8025/livez || exit 1"
-          --health-interval 5s
-          --health-timeout 3s
-          --health-retries 10
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
       - run: bun install --frozen-lockfile
+      - name: Wait for Mailpit
+        run: until curl -sf http://localhost:8025/livez > /dev/null; do sleep 1; done
       - run: bun run lint
       - run: bun run knip
       - run: bun run typecheck
