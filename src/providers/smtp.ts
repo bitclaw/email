@@ -5,7 +5,8 @@ import type { SendEmailOptions, SendEmailResult } from "../types";
 import { BaseEmailProvider } from "./base";
 
 export class SmtpProvider extends BaseEmailProvider {
-  private transporter: import("nodemailer").Transporter | null = null;
+  // biome-ignore lint/suspicious/noExplicitAny: nodemailer transporter, dynamically imported
+  private transporter: any = null;
 
   private async getTransporter() {
     if (this.transporter) return this.transporter;
