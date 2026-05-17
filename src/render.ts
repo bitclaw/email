@@ -1,12 +1,12 @@
-import type { ReactElement } from 'react';
+import type { ReactElement } from "react";
 
 export const renderReactEmail = async (
-  component: ReactElement
+  component: ReactElement,
 ): Promise<{ html: string; text: string }> => {
-  const { render } = await import('@react-email/render');
+  const { render } = await import("@react-email/render");
   const [html, text] = await Promise.all([
     render(component),
-    render(component, { plainText: true })
+    render(component, { plainText: true }),
   ]);
   return { html, text };
 };

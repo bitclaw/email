@@ -1,13 +1,13 @@
-import { EMAIL_ERROR_CODES } from '../errors';
-import { renderReactEmail } from '../render';
-import type { Result } from '../result';
-import { err, ok } from '../result';
+import { EMAIL_ERROR_CODES } from "../errors";
+import { renderReactEmail } from "../render";
+import type { Result } from "../result";
+import { err, ok } from "../result";
 import type {
   EmailConfig,
   EmailProvider,
   SendEmailOptions,
-  SendEmailResult
-} from '../types';
+  SendEmailResult,
+} from "../types";
 
 export type ResolvedEmailContent = {
   html: string;
@@ -25,7 +25,7 @@ export abstract class BaseEmailProvider implements EmailProvider {
   abstract getProviderName(): string;
 
   protected async resolveContent(
-    options: SendEmailOptions
+    options: SendEmailOptions,
   ): Promise<Result<ResolvedEmailContent>> {
     if (options.react) {
       try {
@@ -35,7 +35,7 @@ export abstract class BaseEmailProvider implements EmailProvider {
         return err(
           EMAIL_ERROR_CODES.RENDER_FAILED,
           `Failed to render React email: ${error instanceof Error ? error.message : String(error)}`,
-          error instanceof Error ? error : undefined
+          error instanceof Error ? error : undefined,
         );
       }
     }
@@ -53,23 +53,23 @@ export type CreateEmailProviderOptions = {
 };
 
 export const createEmailProvider = async (
-  options: CreateEmailProviderOptions
+  options: CreateEmailProviderOptions,
 ): Promise<Result<EmailProvider>> => {
   const { config } = options;
 
   switch (config.provider) {
-    case 'resend': {
-      const { ResendProvider } = await import('./resend');
+    case "resend": {
+      const { ResendProvider } = await import("./resend");
       return ok(new ResendProvider(config));
     }
-    case 'smtp': {
-      const { SmtpProvider } = await import('./smtp');
+    case "smtp": {
+      const { SmtpProvider } = await import("./smtp");
       return ok(new SmtpProvider(config));
     }
     default:
       return err(
         EMAIL_ERROR_CODES.INVALID_CONFIG,
-        `Unknown email provider: ${config.provider}`
+        `Unknown email provider: ${config.provider}`,
       );
   }
 };

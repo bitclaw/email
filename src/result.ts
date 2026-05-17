@@ -8,5 +8,5 @@ export {
   isOk,
   type Ok,
   ok,
-  type Result
-} from '@bitclaw/result';
+  type Result,
+} from "@bitclaw/result";
