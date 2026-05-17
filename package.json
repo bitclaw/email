@@ -8,25 +8,27 @@
     "README.md"
   ],
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
     }
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "test": "bun test",
+    "test:unit": "bun test --ignore src/providers/smtp.test.ts",
+    "test:integration": "bun test src/providers/smtp.test.ts",
     "test:watch": "bun test --watch",
     "typecheck": "tsc --noEmit",
     "lint": "biome check",
     "lint:fix": "biome check --write",
     "format": "biome format --write",
     "knip": "knip",
-    "prepare": "bun run build",
-    "prepublishOnly": "npm test",
+    "prepublishOnly": "npm run build && npm run test:unit",
+    "publish:dev": "npm run build && npm publish --tag dev --access public",
     "publish:patch": "npm whoami && npm version patch && git push --follow-tags && npm publish --access public",
     "publish:minor": "npm whoami && npm version minor && git push --follow-tags && npm publish --access public",
     "publish:major": "npm whoami && npm version major && git push --follow-tags && npm publish --access public"
