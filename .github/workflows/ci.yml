@@ -26,5 +26,4 @@ jobs:
       - run: bun run lint
       - run: bun run knip
       - run: bun run typecheck
-      - run: bun test --ignore src/providers/smtp-errors.test.ts
-      - run: bun test src/providers/smtp-errors.test.ts
+      - run: bun run test
