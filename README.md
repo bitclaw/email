@@ -4,11 +4,11 @@ Multi-provider email abstraction layer with React email rendering support.
 
 ## Features
 
-- **Multi-provider** — Resend and SMTP (nodemailer) out of the box
-- **React email** — Render React components to HTML via `@react-email/render`
-- **Result type** — Type-safe `Result<T>` pattern for error handling
-- **Config from env** — Auto-configure from environment variables
-- **Mailpit support** — Local dev with Mailpit SMTP (no API keys needed)
+- **Multi-provider** - Resend and SMTP (nodemailer) out of the box
+- **React email** - Render React components to HTML via `@react-email/render`
+- **Result type** - Type-safe `Result<T>` pattern for error handling
+- **Config from env** - Auto-configure from environment variables
+- **Mailpit support** - Local dev with Mailpit SMTP (no API keys needed)
 
 ## Installation
 
@@ -16,7 +16,7 @@ Multi-provider email abstraction layer with React email rendering support.
 bun add @bitclaw/email
 ```
 
-Resend is an optional peer dependency — only install it if you use the Resend provider:
+Resend is an optional peer dependency - only install it if you use the Resend provider:
 
 ```bash
 bun add resend
@@ -101,12 +101,12 @@ const config = createMailpitConfig()
 |----------|---------|-------------|
 | `EMAIL_PROVIDER` | `resend` | Provider: `resend` or `smtp` |
 | `EMAIL_FROM` | `noreply@{APP_DOMAIN}` | From address |
-| `RESEND_API_KEY` | — | Resend API key (if provider is resend) |
+| `RESEND_API_KEY` | - | Resend API key (if provider is resend) |
 | `SMTP_HOST` | `localhost` | SMTP server host |
 | `SMTP_PORT` | `587` | SMTP server port |
 | `SMTP_SECURE` | `false` | Use TLS |
-| `SMTP_USER` | — | SMTP username |
-| `SMTP_PASS` | — | SMTP password |
+| `SMTP_USER` | - | SMTP username |
+| `SMTP_PASS` | - | SMTP password |
 
 ## Exports
 

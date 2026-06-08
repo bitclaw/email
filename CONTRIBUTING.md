@@ -25,7 +25,7 @@ Then run tests:
 bun test
 ```
 
-Mailpit web UI at http://localhost:8025 — inspect sent emails visually.
+Mailpit web UI at http://localhost:8025 - inspect sent emails visually.
 
 To reset the mailbox:
 

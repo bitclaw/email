@@ -2,7 +2,7 @@
 // Kept in a separate file so the file-level mock does not bleed into
 // the Mailpit integration tests in smtp.test.ts.
 //
-// EAUTH/ESOCKET require an auth-enforcing SMTP server — Mailpit is permissive.
+// EAUTH/ESOCKET require an auth-enforcing SMTP server - Mailpit is permissive.
 // nodemailer v8 renamed 'NoAuth' → 'ENOAUTH'; we intentionally let it fall
 // through to EMAIL_SEND_FAILED rather than adding a special case.
 
@@ -44,7 +44,7 @@ describe('SmtpProvider error codes', () => {
     if (!result.ok) expect(result.code).toBe('EMAIL_AUTH_FAILED');
   });
 
-  // nodemailer v8 renamed 'NoAuth' → 'ENOAUTH'. Not explicitly handled —
+  // nodemailer v8 renamed 'NoAuth' → 'ENOAUTH'. Not explicitly handled -
   // falls through to EMAIL_SEND_FAILED intentionally.
   it('should map ENOAUTH (nodemailer v8) to EMAIL_SEND_FAILED', async () => {
     const enoauthErr = Object.assign(new Error('No auth'), { code: 'ENOAUTH' });
